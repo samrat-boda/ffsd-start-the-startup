@@ -1,3 +1,4 @@
+
 var express = require("express");
 var app = express();
 
@@ -341,6 +342,156 @@ http.listen(3000, function () {
             }
           }
         );
+      });
+      app.post("/updateProfile",function(request,result){
+        var accessToken=request.fields.accessToken;
+        var name=request.fields.name;
+        var dob=request.fields.dob;
+        var city=request.fields.city;
+        var country=request.fields.country;
+        var aboutMe=request.fields.aboutMe;
+
+        database.collection("users").findOne({
+          "accessToken":accessToken
+        },function(error,user){
+          if(user==null)
+          {
+            result.json({
+              "status":"error",
+              "message":"User has been logged out. Please login again"
+            });
+          }
+          else{
+            database.collection("users").updateOne({
+              "accessToken":accessToken
+            },{
+              $set:{
+                "name":name,
+                "dob":dob,
+                "city":city,
+                "country":country,
+                "aboutMe":aboutMe
+              }
+            },function(error,data){
+              result.json({
+                "status":"status",
+                "message":"Profile has been updated"
+              });
+            });
+          }
+        });
+      });
+      app.get("/",function(request,result){
+        result.render("index");
+      });
+      app.post("/addPost",function(request,result){
+        var accessToken=request.fields.accessToken;
+        var caption=request.fields.caption;
+        var image="";
+        var video="";
+        var type=request.fields.type;
+        var createdAt=new Date().getTime();
+        var _id=request.fields._id;
+        database.collection("users").findOne({
+          "accessToken":accessToken
+        },function (error,user) { 
+          if(user==null){
+            result.json({
+              "status":"error",
+              "message":"User has been logged out.Please login again"
+            });
+          }else
+          {
+            if(request.files.image.size>0&&request.files.image.type.includes("image")){
+              image="public/images"+new Date().getTime+"-"+request.files.image.name;
+              fileSystem.rename(request.files.image.path,image,function(error){
+
+              });
+            }
+            if(request.files.video.size>0&&request.files.video.type.includes("video"))
+            {
+              image="public/videos"+new Date().getTime+"-"+request.files.video.name;
+              fileSystem.rename(request.files.video.path,video,function(error){
+
+              });
+            }
+            database.collection("posts").insertOne({
+              "caption":caption,
+              "image":image,
+              "video":video,
+              "type":type,
+              "createdAt":createdAt,
+              "likers":[],
+              "comments":[],
+              "shares":[],
+              "user":{
+                "_id":user._id,
+                "name":user.name,
+                "profileImage":user.profileImage
+              }
+            },function(error,data){
+              database.collection("users").updateOne({
+                "accessToken":accessToken
+              },{
+                $push:{
+                  "posts":{
+                    "_id":data.insertedId,
+                    "caption":caption,
+                    "image":image,
+                    "video":video,
+                    "type":type,
+                    "createdAt":createdAt,
+                    "likers":[],
+                    "comments":[],
+                    "shares":[],
+
+                  }
+                }
+              },function(error,data){
+                result.json({
+                  "status":"success",
+                  "message":"Post has been uploaded"
+                });
+              });
+            });
+          }
+         });
+      });
+      app.post("/getNewsfeed", function (request, result) {
+        var accessToken = request.fields.accessToken;
+        database.collection("users").findOne({
+          "accessToken": accessToken
+        }, function (error, user) {
+          if (user == null) {
+            result.json({
+              "status": "error",
+              "message": "User has been logged out. Please login again."
+            });
+          } else {
+  
+            var ids = [];
+            ids.push(user._id);
+  
+            database.collection("posts")
+            .find({
+              "user._id": {
+                $in: ids
+              }
+            })
+            .sort({
+              "createdAt": -1
+            })
+            .limit(5)
+            .toArray(function (error, data) {
+  
+              result.json({
+                "status": "success",
+                "message": "Record has been fetched",
+                "data": data
+              });
+            });
+          }
+        });
       });
   });
 });
