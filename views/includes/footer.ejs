@@ -72,20 +72,20 @@
 							showPostDetails();
 						}
 
-						if (typeof isNotifications !== "undefined" && isNotifications) {
-							showNotifications();
-							markNotificationsAsRead();
-						} else {
-							var notificationsCount = 0;
-							for (var a = 0; a < window.user.notifications.length; a++) {
-								if (!window.user.notifications[a].isRead) {
-									notificationsCount++;
-								}
-							}
-							if (notificationsCount > 0) {
-								document.getElementById("notifications-badge").innerHTML = "(" + notificationsCount + ")";
-							}
-						}
+						// if (typeof isNotifications !== "undefined" && isNotifications) {
+						// 	showNotifications();
+						// 	markNotificationsAsRead();
+						// } else {
+						// 	var notificationsCount = 0;
+						// 	for (var a = 0; a < window.user.notifications.length; a++) {
+						// 		if (!window.user.notifications[a].isRead) {
+						// 			notificationsCount++;
+						// 		}
+						// 	}
+						// 	if (notificationsCount > 0) {
+						// 		document.getElementById("notifications-badge").innerHTML = "(" + notificationsCount + ")";
+						// 	}
+						// }
 
 					} else {
 						localStorage.removeItem("accessToken");
