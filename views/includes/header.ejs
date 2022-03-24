@@ -62,9 +62,9 @@
 
 			var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-			function onSearch(button) {
-				window.location.href = "/search/" + button.previousElementSibling.value;
-			}
+			// function onSearch(button) {
+			// 	window.location.href = "/search/" + button.previousElementSibling.value;
+			// }
 
 			function createLikesSection(data) {
 
@@ -102,6 +102,7 @@
 							html += '<span class="comment" title="Comments">';
 								html += '<i class="fa fa-comments-o"></i>';
 								html += '<ins id="count-post-comments-' + data._id + '">' + data.comments.length + '</ins>';
+								//html+='<ins>'+data.comments.length+'</ins>';
 							html += '</span>';
 						html += '</li>';
 
