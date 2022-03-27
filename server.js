@@ -389,6 +389,7 @@ http.listen(3000, function () {
         var caption=request.fields.caption;
         var image="";
         var video="";
+        //var doc="";
         var type=request.fields.type;
         var createdAt=new Date().getTime();
         var _id=request.fields._id;
@@ -403,22 +404,29 @@ http.listen(3000, function () {
           }else
           {
             if(request.files.image.size>0&&request.files.image.type.includes("image")){
-              image="public/images"+new Date().getTime+"-"+request.files.image.name;
-              fileSystem.rename(request.files.image.path,image,function(error){
+               image="public/images"+new Date().getTime+"-"+request.files.image.name;
+               fileSystem.rename(request.files.image.path,image,function(error){
 
-              });
-            }
-            if(request.files.video.size>0&&request.files.video.type.includes("video"))
-            {
-              image="public/videos"+new Date().getTime+"-"+request.files.video.name;
-              fileSystem.rename(request.files.video.path,video,function(error){
+               });
+             }
+            //  if(request.files.doc.size>0&&request.files.doc.type.includes("doc")){
+            //    doc="public/documents"+new Date().getTime+"-"+request.files.doc.name;
+            //    fileSystem.rename(request.files.doc.path,doc,function(error){
 
-              });
-            }
+            //    });
+            // }
+             if(request.files.video.size>0&&request.files.video.type.includes("video"))
+             {
+               image="public/videos"+new Date().getTime+"-"+request.files.video.name;
+               fileSystem.rename(request.files.video.path,video,function(error){
+
+               });
+             }
             database.collection("posts").insertOne({
               "caption":caption,
               "image":image,
               "video":video,
+              //"documents":doc,
               "type":type,
               "createdAt":createdAt,
               "likers":[],
@@ -439,6 +447,7 @@ http.listen(3000, function () {
                     "caption":caption,
                     "image":image,
                     "video":video,
+                    //"documents":doc,
                     "type":type,
                     "createdAt":createdAt,
                     "likers":[],
@@ -454,8 +463,7 @@ http.listen(3000, function () {
                 });
               });
             });
-          }
-         });
+          };
       });
       app.post("/getNewsfeed", function (request, result) {
         var accessToken = request.fields.accessToken;
@@ -899,3 +907,5 @@ http.listen(3000, function () {
       });
   });
 });
+});
+
