@@ -7,6 +7,7 @@
                 <div class="col-md-12">
                     <div class="row" id="page-contents">
                         <div class="col-md-3">
+							<%- include("includes/left-sidebar") %>
                         </div>
                         <div class="col-md-6">
                             <div id="add-post-box"></div>
@@ -109,7 +110,7 @@
 									html += createLikesSection(data);
 								html += '</div>';
 							html += '</div>';
-							html+=createCommentsSection(data);
+							//html+=createCommentsSection(data);
 						html += '</div>';
 					html += '</div>';
 				}
