@@ -31,10 +31,10 @@
 
  
 
-<script src="/public/js/jquery-3.3.1.min.js"></script>
+<!-- <script src="/public/js/jquery-3.3.1.min.js"></script>
 <script src="/public/js/script.js"></script>
 <script src="/public/js/main.min.js"></script>
-<script src="/public/js/socket.io.js"></script>
+<script src="/public/js/socket.io.js"></script> -->
 
 <script>
 
@@ -70,6 +70,9 @@
 
 						if (typeof isPostDetail !== "undefined" && isPostDetail) {
 							showPostDetails();
+						}
+						if(typeof isFriends!="undefined"&&isFriends){
+							showFriends();
 						}
 
 						// if (typeof isNotifications !== "undefined" && isNotifications) {

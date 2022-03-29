@@ -814,10 +814,10 @@ header.sticky {
 .form-search {
     position: absolute;
     right: -15px;
-    top: 42px;
+    top: 12px;
     width: 300px;
-    opacity: 0;
-    visibility: hidden;
+    /* opacity: 0;
+    visibility: hidden; */
 }
 
 .searched.active .form-search {
@@ -828,7 +828,8 @@ header.sticky {
 .form-search input {
     border-style: none none solid;
     border-width: medium medium 1px;
-    color: #999999;
+    /*color: #999999;*/
+    color: black;
     font-size: 15px;
     padding: 9px 18px;
     width: 100%;

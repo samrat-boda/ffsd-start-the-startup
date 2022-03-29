@@ -7,6 +7,7 @@
                 <div class="col-md-12">
                     <div class="row" id="page-contents">
                         <div class="col-md-3">
+							<%- include("includes/left-sidebar") %>
                         </div>
                         <div class="col-md-6">
                             <div id="add-post-box"></div>
@@ -30,9 +31,11 @@
 						if(response.status="success"){
 							document.getElementById("form-add-post").querySelector("input[name='image']").value="";
 							document.getElementById("form-add-post").querySelector("input[name='video']").value="";
+							// document.getElementById("form-add-post").querySelector("input[name='document']").value="";
 							document.getElementById("form-add-post").querySelector("textarea[name='caption']").value="";
 							document.getElementById("post-img-preview").style.display="none";
 							document.getElementById("post-video-preview").style.display="none";
+							//document.getElementById("post-file-preview").style.display="none";
                             showNewsfeed();
 						}
 					}
@@ -100,10 +103,14 @@
 									if (data.video != "") {
 										html += '<video style="height: 359px; width: 100%;" controls src="' + mainURL + "/" + data.video + '"></video>';
 									}
+									// if(data.document !=""){
+									// 	html+='<file src="'+mainURL+"/"+data.document+'">';
+
+									// }
 									html += createLikesSection(data);
 								html += '</div>';
 							html += '</div>';
-							html+=createCommentsSection(data);
+							//html+=createCommentsSection(data);
 						html += '</div>';
 					html += '</div>';
 				}
