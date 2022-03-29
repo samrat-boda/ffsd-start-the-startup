@@ -880,6 +880,12 @@ http.listen(3000, function () {
   app.get("/createGroup",function(request,result){
     result.render("createGroup");
   });
+  app.get("/groups",function(request,result){
+    result.render("groups");
+  })
+  app.get("/notifications",function(request,result){
+    result.render("notifications");
+  })
 });
 });
 
