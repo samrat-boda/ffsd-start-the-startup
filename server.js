@@ -34,6 +34,9 @@ http.listen(3000, function () {
     var database = client.db("ffsdproject");
     console.log("Database connected");
     app.get("/", function (request, result) {
+      result.render("landingpage");
+    });
+    app.get("/index", function (request, result) {
       result.render("index");
     });
 
